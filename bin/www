@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('restForKabadiwala:server');
+var debug = require('debug')('kabadiwala:server');
 var http = require('http');
 
 /**

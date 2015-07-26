@@ -13,7 +13,8 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade'); 
+app.set('view engine', 'html');
+app.engine('html',require('hjs').renderFile);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -21,16 +22,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 var connection = mysql.createConnection({
-  host:"localhost",
-  user:"root",
-  password:"root",
+  host:"tester.cjok0ugblgew.ap-southeast-1.rds.amazonaws.com",
+  port:3306,
+  user:"test",
+  password:"test1234",
   database:"weigher"
 });
-
 connection.connect(function(err){
 
   if(err){
@@ -46,7 +47,6 @@ app.use(function(req,res,next){
   req.connection = connection;
   next();
 });
-
 
 app.use('/', routes);
 app.use('/users', users);
